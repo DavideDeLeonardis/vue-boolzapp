@@ -21,7 +21,7 @@
             <div class="col-left">
                 <div class="header d-flex align-center">
                     <div class="d-flex align-center">
-                        <img src="img/avatar_1.jpg" alt="img profilo personale">
+                        <img src="img/avatar_5.jpg" alt="img profilo personale">
                         <span class="user-name">Nome utente</span>
                     </div>
                     <div class="d-flex">
@@ -49,7 +49,7 @@
                             <img :src="`img/avatar${contact.avatar}.jpg`" alt="img profilo chat">
                             <div class="chat-main d-flex">
                                 <div class="user">{{ contact.name }}</div>
-                                <span class="message">{{ contact.messages[0].text }}</span>
+                                <span class="text">{{ contact.messages[0].text }}</span>
                                 <span class="date">{{ contact.messages[0].date }}</span>
                             </div>
                         </li>
@@ -60,16 +60,31 @@
             <div class="col-right">
                 <div class="header d-flex align-center">
                     <div class="d-flex align-center">
-                        <img src="img/avatar_1.jpg" alt="">
+                        <img src="img/avatar_3.jpg" alt="">
                         <div class="chat-main d-flex">
                             <div class="user">Samuele</div>
-                            <span class="message">Ultimo accesso oggi alle 28/03/2020 10:10:40</span>
+                            <span class="text">Ultimo accesso oggi alle 28/03/2020 10:10:40</span>
                         </div>
                     </div>
                     <div>
                         <i class="fas fa-search"></i>
                         <i class="fas fa-paperclip"></i>
                         <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+
+                <div class="main-right d-flex">
+                    <div class="message send d-flex align-center">
+                        La Marianna va in campagna
+                        <span class="date">28/03/2020 10:10:40</span>
+                    </div>
+                    <div class="message received d-flex align-center">
+                        Sicuro di non aver sbagliato chat?
+                        <span class="date">28/03/2020 10:10:40</span>
+                    </div>
+                    <div class="message send d-flex align-center">
+                        Ah scusa!
+                        <span class="date">28/03/2020 10:10:40</span>
                     </div>
                 </div>
 
