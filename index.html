@@ -46,12 +46,14 @@
                     </div>
                     <ul class="container-chat">
                         <li v-for="(contact, index) in contacts" 
-                            class="chat d-flex align-center">
+                            class="chat d-flex align-center"
+                            :class="getChatActive(counter, index)"
+                            @click="getFocusChat(index)">
                             <img :src="`img/avatar${contact.avatar}.jpg`" alt="img profilo chat">
                             <div class="chat-main d-flex">
                                 <div class="user">{{ contact.name }}</div>
-                                <span class="text">{{ contact.messages[0].text }}</span>
-                                <span class="date">{{ contact.messages[0].date }}</span>
+                                <span class="text">{{ getLastMessage(index) }}</span>
+                                <span class="date">{{ getLastDate(index) }}</span>
                             </div>
                         </li>
                     </ul>
@@ -61,10 +63,10 @@
             <div class="col-right">
                 <header class="d-flex align-center">
                     <div class="d-flex align-center">
-                        <img src="img/avatar_3.jpg" alt="">
+                        <img :src="`img/avatar${contacts[counter].avatar}.jpg`" alt="">
                         <div class="chat-main d-flex">
-                            <div class="user">Samuele</div>
-                            <span class="text">Ultimo accesso oggi alle 28/03/2020 10:10:40</span>
+                            <div class="user">{{ contacts[counter].name }}</div>
+                            <span class="text">Ultimo accesso oggi alle {{  }}</span>
                         </div>
                     </div>
                     <div>
@@ -74,20 +76,14 @@
                     </div>
                 </header>
 
-                <div class="main-right d-flex">
-                    <div class="message send d-flex align-center">
-                        La Marianna va in campagna
-                        <span class="date">28/03/2020 10:10:40</span>
-                    </div>
-                    <div class="message received d-flex align-center">
-                        Sicuro di non aver sbagliato chat?
-                        <span class="date">28/03/2020 10:10:40</span>
-                    </div>
-                    <div class="message send d-flex align-center">
-                        Ah scusa!
-                        <span class="date">28/03/2020 10:10:40</span>
-                    </div>
-                </div>
+                <ul class="main-right d-flex">
+                    <li v-for="message in contacts[counter].messages" 
+                        class="message sent d-flex align-center" 
+                        :class="getStatusMessage(message)">
+                        {{ message.text }}
+                        <span class="date">{{ message.date }}</span>
+                    </li>
+                </ul>
 
                 <footer class="d-flex align-center">
                     <i class="far fa-smile"></i>

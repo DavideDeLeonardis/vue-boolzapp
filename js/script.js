@@ -1,3 +1,8 @@
+// Milestone 2
+// Visualizzazione dinamica dei messaggi: tramite la direttiva v-for, 
+    // visualizzare tutti i messaggi relativi al contatto attivo all’interno del pannello della conversazione
+// Click sul contatto mostra la conversazione del contatto cliccato
+
 const app = new Vue(
     {
         el: '#app',
@@ -71,7 +76,7 @@ const app = new Vue(
                 },
                 {
                     name: "Luisa",
-                    avatar: "_4",
+                    avatar: "_6",
                     visible: true,
                     messages: [
                         {
@@ -86,10 +91,32 @@ const app = new Vue(
                         },
                     ],
                 },
-            ]
+            ],
+            counter: 0
         },
         methods: {
-            
+            getStatusMessage(message) {
+                return message.status == "sent" ? 'sent' : 'received';
+            },
+            getChatActive(counter, index) {
+                return counter == index ? 'active' : '';
+            },
+            getFocusChat(index) {
+                this.counter = index;
+            },
+            getLastDate(counter) {
+                let lastMessage = this.contacts[counter].messages.length - 1;
+                let dateLast = this.contacts[counter].messages[lastMessage].date;
+                return dateLast;
+            },
+            getLastMessage(index) {
+                let lastMessage = this.contacts[index].messages.length - 1;
+                let lastText = this.contacts[index].messages[lastMessage].text;
+                return lastText;
+            },
+            getLastAccess() {
+
+            }
         }
     }
 );

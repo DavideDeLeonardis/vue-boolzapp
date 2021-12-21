@@ -16,6 +16,9 @@ html {
 .align-center {
     align-items: center;
 }
+i {
+    cursor: pointer;
+}
 img {
     width: 40px;
     border-radius: 50%;
@@ -25,6 +28,10 @@ input {
     padding-left: 5px;
     border: none;
     outline: none;
+    cursor: pointer;
+}
+ul {
+    list-style-type: none;
 }
 /* /commons */
 
@@ -123,7 +130,6 @@ header i:not(:first-child) {
 .container-chat {
     height: calc(100% - 35px);
     overflow: scroll;
-    list-style-type: none;
 }
 .chat {
     position: relative;
@@ -132,6 +138,7 @@ header i:not(:first-child) {
     background-color: rgb(255, 255, 255);
     padding: 0 10px;
     border-top: 1px solid rgb(234, 234, 234);
+    cursor: pointer;
 }
 .chat:hover {
     background-color: rgb(234, 234, 234);
@@ -156,6 +163,9 @@ header i:not(:first-child) {
 .container-chat .date {
     top: 8px;
 }
+.active {
+    background-color: rgb(234, 234, 234);
+}
 
 /* right column */
 .col-right {
@@ -175,7 +185,7 @@ header i:not(:first-child) {
 }
 .message {
     position: relative;
-    min-width: 17.5%;
+    min-width: 25%;
     max-width: 80%;
     min-height: 42.5px;
     font-size: 0.8em;
@@ -186,7 +196,7 @@ header i:not(:first-child) {
 .message .date {
     bottom: 2px;
 }
-.send {
+.sent {
     align-self: flex-start;
     background-color: rgb(255, 255, 255);
 }
