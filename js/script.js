@@ -107,6 +107,12 @@ const app = new Vue(
             getLastMessage(index) {
                 let lastMessage = this.contacts[index].messages.length - 1;
                 let lastText = this.contacts[index].messages[lastMessage].text;
+                let muchText = lastText.split(' ');
+                // se l'ultimo messaggio è composto da più di 10 parole
+                if (muchText.length > 10) { 
+                    muchText.splice(10);
+                    return `${muchText.join(' ')}...`
+                }
                 return lastText;
             },
             getLastAccess(counter) {
@@ -115,7 +121,7 @@ const app = new Vue(
                         return true;
                     }
                 });
-                return lastDate = sentMessages[sentMessages.length - 1].date;
+                return sentMessages[sentMessages.length - 1].date;
             }
         }
     }
