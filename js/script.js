@@ -109,9 +109,9 @@ const app = new Vue(
                 let lastText = this.contacts[index].messages[lastMessage].text;
                 let muchText = lastText.split(' ');
                 // se l'ultimo messaggio è composto da più di 10 parole
-                if (muchText.length > 10) { 
+                if (muchText.length > 10) {
                     muchText.splice(10);
-                    return `${muchText.join(' ')}...`
+                    return `${muchText.join(' ')}...`;
                 }
                 return lastText;
             },
