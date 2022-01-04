@@ -176,6 +176,10 @@ header i:not(:first-child) {
     width: 65%;
     height: 100%;
 }
+.col-right header .resp-nav {
+    top: -5px;
+    right: 15px;
+}
 
     /* main chat */
 .main-right {
@@ -210,6 +214,7 @@ header i:not(:first-child) {
     top: -20px;
     right: 5px;
     width: 130px;
+    font-size: 13.5px;
     background-color: rgb(255, 255, 255);
     margin-top: 50px;
     border: 1px solid rgb(234, 234, 234);
@@ -250,10 +255,16 @@ footer {
     padding: 0 15px;
 }
 footer input {
-    width: 85%;
+    width: 90%;
     height: 70%;
+    margin: 0 10px;
 }
-footer i {
+footer i:not(:first-child) {
+    display: none;
+    width: 1em;
     font-size: 18px;
     color: rgb(110, 110, 110);
+}
+i.fas.visible {
+    display: block;
 }

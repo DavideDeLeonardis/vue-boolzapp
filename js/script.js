@@ -15,17 +15,13 @@
     // Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
     // Visualizzazione ora e ultimo messaggio inviato/ricevuto nella lista dei contatti 
 
-// Consigli utili
-// Si possono trascurare le scrollbar verticali, sia nel pannello dei messaggi, che nella lista dei contatti
-// I pulsanti e le icone possono non funzionare (a parte l’invio del messaggio)
-// Per gestire le date, può essere utile la libreria day.js
-
 // Bonus
         // Evitare che l'utente possa inviare un messaggio vuoto o composto solamente da spazi
-    // A) Cambiare icona in basso a destra (a fianco all'input per scrivere un nuovo messaggio) finché l'utente sta scrivendo: di default si visualizza l'icona del microfono, quando l'input non è vuoto si visualizza l'icona dell'aeroplano. Quando il messaggio è stato inviato e l'input si svuota, si torna a visualizzare il microfono. B) inviare quindi il messaggio anche cliccando sull'icona dell'aeroplano
-    // Predisporre una lista di frasi e/o citazioni da utilizzare al posto della risposta "ok:" quando il pc risponde, anziché scrivere "ok", scegliere una frase random dalla lista e utilizzarla come testo del messaggio di risposta del pc
+        // A) Cambiare icona in basso a destra (a fianco all'input per scrivere un nuovo messaggio) finché l'utente sta scrivendo: di default si visualizza l'icona del microfono, quando l'input non è vuoto si visualizza l'icona dell'aeroplano. Quando il messaggio è stato inviato e l'input si svuota, si torna a visualizzare il microfono. 
+        //     B) inviare quindi il messaggio anche cliccando sull'icona dell'aeroplano
         // Visualizzare nella lista dei contatti l'ultimo messaggio inviato/ricevuto da ciascun contatto
-    // Inserire l'orario corretto nei messaggi 
+        // Inserire l'orario corretto nei messaggi 
+        // Predisporre una lista di frasi e/o citazioni da utilizzare al posto della risposta "ok:" quando il pc risponde, anziché scrivere "ok", scegliere una frase random dalla lista e utilizzarla come testo del messaggio di risposta del pc
     // Sotto al nome del contatto nella parte in alto a destra, cambiare l'indicazione dello stato: visualizzare il testo "sta scrivendo..." nel timeout in cui il pc risponde, poi mantenere la scritta "online" per un paio di secondi e infine visualizzare "ultimo accesso alle xx:yy" con l'orario corretto
     // Dare la possibilità all'utente di cancellare tutti i messaggi di un contatto o di cancellare l'intera chat con tutti i suoi dati: cliccando sull'icona con i tre pallini in alto a destra, si apre un dropdown menu in cui sono presenti le voci "Elimina messaggi" ed "Elimina chat"; cliccando su di essi si cancellano rispettivamente tutti i messaggi di quel contatto (quindi rimane la conversazione vuota) oppure l'intera chat comprensiva di tutti i dati del contatto oltre che tutti i suoi messaggi (quindi sparisce il contatto anche dalla lista di sinistra)
     // Visualizzare un messaggio di benvenuto che invita l'utente a selezionare un contatto dalla lista per visualizzare i suoi messaggi, anziché attivare di default la prima conversazione
@@ -51,7 +47,7 @@ const app = new Vue(
                         },
                         {
                             date: "10/01/2020 15:50:00",
-                            text: "Ricordati di dargli da mangiare",
+                            text: "Ricordati di dargli da mangiare.",
                             status: "sent",
                             dropdown: false
                         },
@@ -95,7 +91,7 @@ const app = new Vue(
                     messages: [
                         {
                             date: "28/03/2020 10:10:40",
-                            text: "La Marianna va in campagna",
+                            text: "La Marianna va in campagna.",
                             status: "received",
                             dropdown: false
                         },
@@ -126,28 +122,41 @@ const app = new Vue(
                         },
                         {
                             date: "10/01/2020 15:50:00",
-                            text: "Si, ma preferirei andare al cinema",
+                            text: "Si, ma preferirei andare al cinema.",
                             status: "received",
                             dropdown: false
                         },
                     ],
                 },
             ],
+            answers: [
+                'Va bene.',
+                'Ti faccio sapere!',
+                'Può essere.',
+                'Sì.',
+                'No.',
+                'Forse.'
+            ],
             counter: 0,
             messageNew: '',
+            searchText: '',
+            chatNavClick: false
         },
         methods: {
-            getStatusMessage(message) {
-                return message.status == "sent" ? 'sent' : 'received';
+            getFocusChat(index) {
+                this.counter = index;
             },
             getChatActive(index) {
                 return this.counter == index ? 'active' : '';
             },
-            getFocusChat(index) {
-                this.counter = index;
+            getStatusMessage(message) {
+                return message.status == "sent" ? 'sent' : 'received';
+            },
+            lastMessage(index) {
+                return lastMessage = this.contacts[index].messages.length - 1;
             },
             getLastMessage(index) {
-                let lastMessage = this.contacts[index].messages.length - 1;
+                this.lastMessage(index);
                 let lastText = this.contacts[index].messages[lastMessage].text;
                 let muchText = lastText.split(' ');
                 if (muchText.length > 10) {
@@ -160,9 +169,9 @@ const app = new Vue(
                 let date = new Date();
                 return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
             },
-            getLastDate(counter) {
-                let lastMessage = this.contacts[counter].messages.length - 1;
-                let dateLast = this.contacts[counter].messages[lastMessage].date;
+            getLastDate(index) {
+                this.lastMessage(index);
+                let dateLast = this.contacts[index].messages[lastMessage].date;
                 return dateLast;
             },
             getLastAccess() {
@@ -173,6 +182,11 @@ const app = new Vue(
                 });
                 return sentMessages[sentMessages.length - 1].date;
             },
+            search() {
+                
+            },
+
+            // FUNCTIONS INPUT FOOTER
             addMessage() {
                 if (this.messageNew.trim().length != 0) {
                     let message = {
@@ -186,24 +200,52 @@ const app = new Vue(
                     setTimeout(() => {
                         let message = {
                             date: this.getDate(),
-                            text: 'ok',
+                            text: ' ',
                             status: 'received',
                             dropdown: false
                         }
+                        message.text = this.getRandomAnswer(this.answers)
                         this.contacts[this.counter].messages.push(message);
                     }, 1000)
                 }
             },
+            getRandomAnswer(array) {
+                const min = 0;
+                const max = array.length - 1;
+                const indexAnswers = Math.floor(Math.random() * (max - min) + min);
+                return array[indexAnswers];
+            },
+            hideMic() {
+                return this.messageNew.length != 0 ? '' : 'visible';
+            },
+            showPlane() {
+                return this.messageNew.length != 0 ? 'visible' : '';
+            },
+
+            // FUNCTIONS DROPDOWN MENU
             menuTrue(message) {
                 message.dropdown = !message.dropdown;
             },
             showMenu(message) {
                 return message.dropdown == true ? 'show' : '';
             },
-            removeMessage(index) {
+            deleteMessage(index) {
+                // se provo ad eliminare l'ultimo messaggio ERROR in console
                 this.contacts[this.counter].messages.splice(index, 1);
-                // se provo ad eliminare l'ultimo messaggio mi da errore in console
-            }
+            },
+            deleteTrue() {
+                this.chatNavClick = !this.chatNavClick;
+            },
+            showNavTrash() {
+                return this.chatNavClick == true ? 'show' : '';
+            },
+            deleteAllMessages() {
+                this.contacts[this.counter].messages = [];
+                // ERROR in console
+            },
+            deleteChat() {
+                // ?????
+            },
         },
         created() {
             // generic instance in
