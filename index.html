@@ -44,10 +44,7 @@
                 <div class="main-left">
                     <div class="container-input d-flex align-center">
                         <i @click="" class="fas fa-search"></i>
-                        <input @keyup.enter="" 
-                            v-model="searchText" 
-                            type="text" 
-                            placeholder="Cerca o inizia una nuova chat">
+                        <input type="text" placeholder="Cerca o inizia una nuova chat">
                     </div>
                     <ul class="container-chat">
                         <li v-for="(contact, index) in contacts" 
@@ -71,7 +68,7 @@
                         <img :src="`img/avatar${contacts[counter].avatar}.jpg`" alt="">
                         <div class="chat-main d-flex">
                             <div class="user">{{ contacts[counter].name }}</div>
-                            <span class="text">Ultimo accesso: {{ getLastAccess() }}</span>
+                            <span class="text">{{ contacts[counter].lastAccess }}</span>
                         </div>
                     </div>
                     <div>
@@ -102,12 +99,15 @@
 
                 <footer class="d-flex align-center">
                     <i class="far fa-smile"></i>
-                    <input @keyup.enter="addMessage()" 
+                    <input @keyup.enter="sendMessage()" 
                         v-model="messageNew" 
                         type="text" 
                         placeholder="Scrivi un messaggio">
+                        <!-- con sendMessage(): se si cambia chat prima che si riceva la risposta, 
+                                quest'ultima verrà vista sulla chat attualmente visualizzata; 
+                                contacts[counter].lastAccess sbagliato -->
                     <i class="fas fa-microphone" :class="hideMic()"></i>
-                    <i @click="addMessage()" 
+                    <i @click="sendMessage()" 
                         class="fas fa-plane-departure" 
                         :class="showPlane()"></i>
                 </footer>

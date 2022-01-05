@@ -22,7 +22,7 @@
         // Visualizzare nella lista dei contatti l'ultimo messaggio inviato/ricevuto da ciascun contatto
         // Inserire l'orario corretto nei messaggi 
         // Predisporre una lista di frasi e/o citazioni da utilizzare al posto della risposta "ok:" quando il pc risponde, anziché scrivere "ok", scegliere una frase random dalla lista e utilizzarla come testo del messaggio di risposta del pc
-    // Sotto al nome del contatto nella parte in alto a destra, cambiare l'indicazione dello stato: visualizzare il testo "sta scrivendo..." nel timeout in cui il pc risponde, poi mantenere la scritta "online" per un paio di secondi e infine visualizzare "ultimo accesso alle xx:yy" con l'orario corretto
+        // Sotto al nome del contatto nella parte in alto a destra, cambiare l'indicazione dello stato: visualizzare il testo "sta scrivendo..." nel timeout in cui il pc risponde, poi mantenere la scritta "online" per un paio di secondi e infine visualizzare "ultimo accesso alle xx:yy" con l'orario corretto
     // Dare la possibilità all'utente di cancellare tutti i messaggi di un contatto o di cancellare l'intera chat con tutti i suoi dati: cliccando sull'icona con i tre pallini in alto a destra, si apre un dropdown menu in cui sono presenti le voci "Elimina messaggi" ed "Elimina chat"; cliccando su di essi si cancellano rispettivamente tutti i messaggi di quel contatto (quindi rimane la conversazione vuota) oppure l'intera chat comprensiva di tutti i dati del contatto oltre che tutti i suoi messaggi (quindi sparisce il contatto anche dalla lista di sinistra)
     // Visualizzare un messaggio di benvenuto che invita l'utente a selezionare un contatto dalla lista per visualizzare i suoi messaggi, anziché attivare di default la prima conversazione
     // Aggiungere una splash page visibile per 1s all'apertura dell'app
@@ -38,6 +38,7 @@ const app = new Vue(
                     name: "Michele",
                     avatar: "_1",
                     visible: true,
+                    lastAccess: null,
                     messages: [
                         {
                             date: "10/01/2020 15:30:55",
@@ -63,6 +64,7 @@ const app = new Vue(
                     name: "Fabio",
                     avatar: "_2",
                     visible: true,
+                    lastAccess: null,
                     messages: [
                         {
                             date: "20/03/2020 16:30:00",
@@ -88,6 +90,7 @@ const app = new Vue(
                     name: "Samuele",
                     avatar: "_3",
                     visible: true,
+                    lastAccess: null,
                     messages: [
                         {
                             date: "28/03/2020 10:10:40",
@@ -113,6 +116,7 @@ const app = new Vue(
                     name: "Luisa",
                     avatar: "_6",
                     visible: true,
+                    lastAccess: null,
                     messages: [
                         {
                             date: "10/01/2020 15:30:55",
@@ -127,7 +131,7 @@ const app = new Vue(
                             dropdown: false
                         },
                     ],
-                },
+                }
             ],
             answers: [
                 'Va bene.',
@@ -139,8 +143,8 @@ const app = new Vue(
             ],
             counter: 0,
             messageNew: '',
-            searchText: '',
-            chatNavClick: false
+            chatNavClick: false,
+            messageSent: false,
         },
         methods: {
             getFocusChat(index) {
@@ -174,20 +178,10 @@ const app = new Vue(
                 let dateLast = this.contacts[index].messages[lastMessage].date;
                 return dateLast;
             },
-            getLastAccess() {
-                let sentMessages = this.contacts[this.counter].messages.filter(message => {
-                    if (message.status == 'received') {
-                        return true;
-                    }
-                });
-                return sentMessages[sentMessages.length - 1].date;
-            },
-            search() {
-                
-            },
 
             // FUNCTIONS INPUT FOOTER
-            addMessage() {
+            sendMessage() {
+                // se si cambia chat prima che si riceva la risposta, quest'ultima verrà vista sulla chat attualmente visualizzata; inoltre contacts[counter].lastAccess sballato
                 if (this.messageNew.trim().length != 0) {
                     let message = {
                         date: this.getDate(),
@@ -197,23 +191,48 @@ const app = new Vue(
                     }
                     this.contacts[this.counter].messages.push(message);
                     this.messageNew = '';
-                    setTimeout(() => {
-                        let message = {
-                            date: this.getDate(),
-                            text: ' ',
-                            status: 'received',
-                            dropdown: false
-                        }
-                        message.text = this.getRandomAnswer(this.answers)
-                        this.contacts[this.counter].messages.push(message);
-                    }, 1000)
+                    if (!this.messageSent) {
+                        setTimeout(() => {
+                            this.contacts[this.counter].lastAccess = 'Online';
+                            setTimeout(() => {
+                                this.contacts[this.counter].lastAccess = 'Sta scrivendo...';
+                                setTimeout(() => {
+                                    this.receiveMessage();
+                                }, 2000)
+                            }, 2000)
+                        }, 1000)
+                        this.messageSent = true;
+                    }
                 }
+            },
+            receiveMessage() {
+                let message = {
+                    date: this.getDate(),
+                    text: '',
+                    status: 'received',
+                    dropdown: false
+                }
+                message.text = this.getRandomAnswer(this.answers)
+                this.contacts[this.counter].messages.push(message);
+                this.contacts[this.counter].lastAccess = 'Online';
+                setTimeout(() => {
+                    this.contacts[this.counter].lastAccess = this.getLastAccess();
+                    this.messageSent = false;
+                }, 1000);
             },
             getRandomAnswer(array) {
                 const min = 0;
                 const max = array.length - 1;
                 const indexAnswers = Math.floor(Math.random() * (max - min) + min);
                 return array[indexAnswers];
+            },
+            getLastAccess() {
+                let sentMessages = this.contacts[this.counter].messages.filter(message => {
+                    if (message.status == 'received') {
+                        return true;
+                    }
+                });
+                return `Ultimo accesso: ${sentMessages[sentMessages.length - 1].date}`;
             },
             hideMic() {
                 return this.messageNew.length != 0 ? '' : 'visible';
@@ -248,9 +267,7 @@ const app = new Vue(
             },
         },
         created() {
-            // generic instance in
-            // doesn't respect time
-                // will not wait for all of the async operations
+            this.contacts[this.counter].lastAccess = this.getLastAccess();
         }
     }
 );
