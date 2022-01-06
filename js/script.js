@@ -131,7 +131,15 @@ const app = new Vue(
                             dropdown: false
                         },
                     ],
-                }
+                },
+                // {
+                    // name: "Davide",
+                    // avatar: "_7",
+                    // visible: true,
+                    // lastAccess: null,
+                    // messages: [],
+                // },
+                    // se aggiungo contatti senza messages ERROR in console
             ],
             answers: [
                 'Va bene.',
@@ -150,15 +158,6 @@ const app = new Vue(
             varDecreaseFont: false
         },
         methods: {
-            getFocusChat(index) {
-                this.counter = index;
-            },
-            getChatActive(index) {
-                return this.counter == index ? 'active' : '';
-            },
-            getStatusMessage(message) {
-                return message.status == "sent" ? 'sent' : 'received';
-            },
             lastMessage(index) {
                 return lastMessage = this.contacts[index].messages.length - 1;
             },
@@ -182,7 +181,7 @@ const app = new Vue(
                 return dateLast;
             },
             search() {
-
+                
             },
 
             // FUNCTIONS INPUT FOOTER
@@ -198,6 +197,7 @@ const app = new Vue(
                     }
                     this.contacts[this.counter].messages.push(message);
                     this.messageNew = '';
+
                     if (!this.varMessageSent) {
                         setTimeout(() => {
                             this.contacts[this.counter].lastAccess = 'Online';
@@ -216,12 +216,12 @@ const app = new Vue(
             receiveMessage() {
                 let message = {
                     date: this.getDate(),
-                    text: '',
+                    text: this.getRandomAnswer(this.answers),
                     status: 'received',
                     dropdown: false
                 }
-                message.text = this.getRandomAnswer(this.answers)
                 this.contacts[this.counter].messages.push(message);
+
                 this.contacts[this.counter].lastAccess = 'Online';
                 setTimeout(() => {
                     this.contacts[this.counter].lastAccess = this.getLastAccess();
@@ -229,9 +229,7 @@ const app = new Vue(
                 }, 1000);
             },
             getRandomAnswer(array) {
-                const min = 0;
-                const max = array.length - 1;
-                const indexAnswers = Math.floor(Math.random() * (max - min) + min);
+                const indexAnswers = Math.floor(Math.random() * (array.length - 1));
                 return array[indexAnswers];
             },
             getLastAccess() {
@@ -242,20 +240,8 @@ const app = new Vue(
                 });
                 return `Ultimo accesso: ${sentMessages[sentMessages.length - 1].date}`;
             },
-            hideMic() {
-                return this.messageNew.length != 0 ? '' : 'visible';
-            },
-            showPlane() {
-                return this.messageNew.length != 0 ? 'visible' : '';
-            },
 
-            // FUNCTIONS DROPDOWN MENU
-            menuTrue(message) {
-                message.dropdown = !message.dropdown;
-            },
-            showMenu(message) {
-                return message.dropdown == true ? 'show' : '';
-            },
+            // FUNCTIONS DROPDOWN MENUS
             deleteMessage(index) {
                 // se provo ad eliminare l'ultimo messaggio => ERROR in console
                 this.contacts[this.counter].messages.splice(index, 1);
@@ -266,35 +252,11 @@ const app = new Vue(
             },
             deleteChat() {
                 // ?????
-            },
-            getTrashTrue() {
-                this.varTrash = !this.varTrash;
-            },
-            showNavTrash() {
-                return this.varTrash == true ? 'show' : '';
-            },
-            getNavFontTrue() {
-                this.varNavFont = !this.varNavFont;
-            },
-            showNavFont() {
-                return this.varNavFont == true ? 'show' : '';
-            },
-            increaseFontTrue() {
-                this.varIncreaseFont = !this.varIncreaseFont;
-            },
-            decreaseFontTrue() {
-                this.varDecreaseFont = !this.varDecreaseFont;
-            },
-            // getFontIncrease() {
-            //     return this.varIncreaseFont == true ? 'font-120' : '';
-            // },
-            // getFontDecrease() {
-            //     return this.varDecreaseFont == true ? 'font-80' : '';
-            // }
-                // getFontIncrease and getFontDecrease stanno nell'html perchè con più di una funzione per :class => ERROR in console
+            }
         },
         created() {
             this.contacts[this.counter].lastAccess = this.getLastAccess();
+            // lastAccess si vede all'apertura solo in contacts[0]
         }
     }
 );

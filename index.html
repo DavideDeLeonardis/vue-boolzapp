@@ -30,12 +30,12 @@
                     <div class="d-flex">
                         <i class="fas fa-circle-notch"></i>
                         <i class="fas fa-comment-alt"></i>
-                        <i @click="getNavFontTrue"  class="fas fa-font"></i>
-                        <ul class="resp-nav" :class="showNavFont()">
-                            <li @click="increaseFontTrue">
+                        <i @click="varNavFont = !varNavFont"  class="fas fa-font"></i>
+                        <ul class="resp-nav" :class="{'show': varNavFont}">
+                            <li @click="varIncreaseFont = !varIncreaseFont">
                                 <i class="fas fa-plus"></i><br>
                                 Ingrandisci font</li>
-                            <li @click="decreaseFontTrue">
+                            <li @click="varDecreaseFont = !varDecreaseFont">
                                 <i class="fas fa-minus"></i><br>
                                 Rimpicciolisci font</li> 
                         </ul>
@@ -57,9 +57,9 @@
                     </div>
                     <ul class="container-chat">
                         <li v-for="(contact, index) in contacts" 
-                            @click="getFocusChat(index)"
+                            @click="counter = index"
                             class="chat d-flex align-center"
-                            :class="getChatActive(index)">
+                            :class="counter == index ? 'active' : ''">
                             <img :src="`img/avatar${contact.avatar}.jpg`" alt="img profilo chat">
                             <div class="chat-main d-flex">
                                 <div class="user">{{ contact.name }}</div>
@@ -83,8 +83,8 @@
                     <div>
                         <i class="fas fa-search"></i>
                         <i class="fas fa-paperclip"></i>
-                        <i @click="getTrashTrue" class="fas fa-trash"></i>
-                        <ul class="resp-nav" :class="showNavTrash()">
+                        <i @click="varTrash = !varTrash" class="fas fa-trash"></i>
+                        <ul class="resp-nav" :class="{'show': varTrash}">
                             <li @click="deleteAllMessages">Delete all messages</li> <!-- ERROR in console  -->
                             <li @click="">Delete chat</li> <!-- missing function delete chat -->
                         </ul>
@@ -94,10 +94,10 @@
                 <ul class="main-right d-flex">
                     <li v-for="(message, index) in contacts[counter].messages" 
                         class="message sent d-flex align-center" 
-                        :class="getStatusMessage(message)">
+                        :class="message.status == 'sent' ? 'sent' : 'received'">
                         {{ message.text }}
-                        <i @click="menuTrue(message)" class="fas fa-angle-down"></i>
-                        <ul class="resp-nav" :class="showMenu(message)">
+                        <i @click="message.dropdown = !message.dropdown" class="fas fa-angle-down"></i>
+                        <ul class="resp-nav" :class="{'show': message.dropdown}">
                             <li>Message info</li>
                             <li @click="deleteMessage(index)">Delete message</li> 
                                 <!-- se provo ad eliminare l'ultimo messaggio mandato ERROR in console -->
@@ -115,10 +115,10 @@
                         <!-- con sendMessage(): se si cambia chat prima che si riceva la risposta, 
                                 quest'ultima verrà vista sulla chat attualmente visualizzata; 
                                 contacts[counter].lastAccess sbagliato -->
-                    <i class="fas fa-microphone" :class="hideMic()"></i>
+                    <i class="fas fa-microphone" :class="messageNew.length != 0 ? '' : 'visible'"></i>
                     <i @click="sendMessage()" 
                         class="fas fa-plane-departure" 
-                        :class="showPlane()"></i>
+                        :class="messageNew.length != 0 ? 'visible' : ''"></i>
                 </footer>
             </div>
         </main>
