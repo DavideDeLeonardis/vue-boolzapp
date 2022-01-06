@@ -27,7 +27,7 @@
     // Visualizzare un messaggio di benvenuto che invita l'utente a selezionare un contatto dalla lista per visualizzare i suoi messaggi, anziché attivare di default la prima conversazione
     // Aggiungere una splash page visibile per 1s all'apertura dell'app
     // Aggiungere un'icona per cambiare la modalità light/dark
-    // Aggiungere un'icona per ingrandire o rimpicciolire il font
+        // Aggiungere un'icona per ingrandire o rimpicciolire il font
 
 const app = new Vue(
     {
@@ -143,8 +143,11 @@ const app = new Vue(
             ],
             counter: 0,
             messageNew: '',
-            chatNavClick: false,
-            messageSent: false,
+            varMessageSent: false,
+            varTrash: false,
+            varNavFont: false,
+            varIncreaseFont: false,
+            varDecreaseFont: false
         },
         methods: {
             getFocusChat(index) {
@@ -178,12 +181,16 @@ const app = new Vue(
                 let dateLast = this.contacts[index].messages[lastMessage].date;
                 return dateLast;
             },
+            search() {
+
+            },
 
             // FUNCTIONS INPUT FOOTER
             sendMessage() {
-                // se si cambia chat prima che si riceva la risposta, quest'ultima verrà vista sulla chat attualmente visualizzata; inoltre contacts[counter].lastAccess sballato
                 if (this.messageNew.trim().length != 0) {
+                    // const varDayJs = dayjs(); 
                     let message = {
+                        // date: `${varDayJs.format('HH')}:${varDayJs.format('mm')}`,
                         date: this.getDate(),
                         text: this.messageNew,
                         status: 'sent',
@@ -191,7 +198,7 @@ const app = new Vue(
                     }
                     this.contacts[this.counter].messages.push(message);
                     this.messageNew = '';
-                    if (!this.messageSent) {
+                    if (!this.varMessageSent) {
                         setTimeout(() => {
                             this.contacts[this.counter].lastAccess = 'Online';
                             setTimeout(() => {
@@ -201,9 +208,10 @@ const app = new Vue(
                                 }, 2000)
                             }, 2000)
                         }, 1000)
-                        this.messageSent = true;
+                        this.varMessageSent = true;
                     }
                 }
+                // se si cambia chat prima che si riceva la risposta: - quest'ultima verrà vista sulla chat attualmente visualizzata; - contacts[counter].lastAccess sballato
             },
             receiveMessage() {
                 let message = {
@@ -217,7 +225,7 @@ const app = new Vue(
                 this.contacts[this.counter].lastAccess = 'Online';
                 setTimeout(() => {
                     this.contacts[this.counter].lastAccess = this.getLastAccess();
-                    this.messageSent = false;
+                    this.varMessageSent = false;
                 }, 1000);
             },
             getRandomAnswer(array) {
@@ -249,14 +257,8 @@ const app = new Vue(
                 return message.dropdown == true ? 'show' : '';
             },
             deleteMessage(index) {
-                // se provo ad eliminare l'ultimo messaggio ERROR in console
+                // se provo ad eliminare l'ultimo messaggio => ERROR in console
                 this.contacts[this.counter].messages.splice(index, 1);
-            },
-            deleteTrue() {
-                this.chatNavClick = !this.chatNavClick;
-            },
-            showNavTrash() {
-                return this.chatNavClick == true ? 'show' : '';
             },
             deleteAllMessages() {
                 this.contacts[this.counter].messages = [];
@@ -265,6 +267,31 @@ const app = new Vue(
             deleteChat() {
                 // ?????
             },
+            getTrashTrue() {
+                this.varTrash = !this.varTrash;
+            },
+            showNavTrash() {
+                return this.varTrash == true ? 'show' : '';
+            },
+            getNavFontTrue() {
+                this.varNavFont = !this.varNavFont;
+            },
+            showNavFont() {
+                return this.varNavFont == true ? 'show' : '';
+            },
+            increaseFontTrue() {
+                this.varIncreaseFont = !this.varIncreaseFont;
+            },
+            decreaseFontTrue() {
+                this.varDecreaseFont = !this.varDecreaseFont;
+            },
+            // getFontIncrease() {
+            //     return this.varIncreaseFont == true ? 'font-120' : '';
+            // },
+            // getFontDecrease() {
+            //     return this.varDecreaseFont == true ? 'font-80' : '';
+            // }
+                // getFontIncrease and getFontDecrease stanno nell'html perchè con più di una funzione per :class => ERROR in console
         },
         created() {
             this.contacts[this.counter].lastAccess = this.getLastAccess();

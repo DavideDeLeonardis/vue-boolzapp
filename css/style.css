@@ -24,11 +24,11 @@ i:hover {
     transition: 0.3s;
 }
 img {
-    width: 40px;
+    width: 2.5em;
     border-radius: 50%;
 }
 input {
-    font-size: 11px;
+    font-size: 0.8em;
     padding-left: 5px;
     border: none;
     outline: none;
@@ -43,6 +43,12 @@ ul {
     height: 100vh;
     background: linear-gradient(rgb(9, 151, 136) 20%, rgb(217, 219, 214) 20%, rgb(217, 219, 214) 80%);
     overflow: scroll;
+}
+.font-120 {
+    font-size: 120%;
+}
+.font-80 {
+    font-size: 80%;
 }
 
 .container {
@@ -59,43 +65,68 @@ ul {
     height: 100%;
     border-right: 1px solid rgb(215, 215, 215);
 }
+
+    /* header */
 header {
     justify-content: space-between;
     width: 100%;
-    height: 60px;
+    height: 3.75em;
     background-color: rgb(234, 234, 234);
-    padding: 0 15px;
+    padding: 0 1em;
 }
 .user-name {
-    font-size: 14px;
-    margin-left: 5px;
+    font-size: 1em;
+    margin-left: 10px;
 }
 header i {
-    font-size: 18px;
+    font-size: 1em;
     color: rgb(177, 177, 177);
+    margin-left: 0.6em;
 }
-header i:not(:first-child) {
-    margin-left: 10px;
+.col-left header i.fa-ellipsis-v {
+    position: relative;
+}
+.resp-nav {
+    display: none;
+    position: absolute;
+    width: 8rem;
+    font-size: 0.85rem;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(234, 234, 234);
+    z-index: 999;
+}
+.resp-nav li {
+    margin: 5px;
+    padding: 0.8em;
+}
+.resp-nav li:hover {
+    background-color: rgb(234, 234, 234);
+    cursor: pointer;
+}
+.col-left .resp-nav {
+    width: 11em;
+    text-align: center;
+    transform: translate(-50%, 15%);
 }
 
     /* notice */
 .notice {
     width: 100%;
-    height: 60px;
+    height: 3.75em;
     background-color: rgb(142, 218, 252);
-    padding: 10px;
+    padding: 0.6em;
 }
 .notice i {
-    width: 40px;
-    height: 40px;
+    width: 2.5em;
+    height: 2.5em;
     color: rgb(142, 218, 252);
     background-color: rgb(255, 255, 255);
-    padding: 11px;
+    padding: 0.7em;
     border-radius: 50%;
 }
 .text-notice {
     font-size: 0.8em;
-    margin-left: 10px;
+    margin-left: 0.6em;
 }
 .text-notice span {
     font-size: 0.85em;
@@ -106,17 +137,17 @@ header i:not(:first-child) {
     /* main left */
 .main-left {
     width: 100%;
-    height: calc(100% - 125px);
+    height: calc(100% - 7.5em - 5px);
     background-color: rgb(248, 248, 248);
 }
 
         /* input left column  */
 .container-input {
     width: 95%;
-    height: 30px;
+    height: 2em;
     background-color: rgb(255, 255, 255);
     margin: 5px auto;
-    padding-left: 10px;
+    padding-left: 0.6em;
     border: 1px solid rgb(234, 234, 234);
 }
 .container-input input {
@@ -124,22 +155,22 @@ header i:not(:first-child) {
     height: 100%;
 }
 .container-input i {
-    font-size: 15px;
+    font-size: 1em;
     color: rgb(177, 177, 177);
     margin-right: 10px;
 }
 
-        /* chat list */
+        /* container chat */
 .container-chat {
-    height: calc(100% - 35px);
+    height: calc(100% - 2.2em);
     overflow: scroll;
 }
 .chat {
     position: relative;
     width: 100%;
-    height: 60px;
+    height: 3.75em;
     background-color: rgb(255, 255, 255);
-    padding: 0 10px;
+    padding: 0 0.7rem;
     border-top: 1px solid rgb(234, 234, 234);
     cursor: pointer;
 }
@@ -148,7 +179,7 @@ header i:not(:first-child) {
 }
 .chat-main {
     flex-direction: column;
-    margin-left: 10px;
+    margin-left: 0.6em;
 }
 .user {
     font-size: 0.9em;
@@ -159,12 +190,12 @@ header i:not(:first-child) {
 }
 .date {
     position: absolute;
-    right: 10px;
+    right: 1em;
     color: rgb(177, 177, 177);
     font-size: 0.6em;
 }
 .container-chat .date {
-    top: 8px;
+    top: 0.5rem;
 }
 .active {
     background-color: rgb(234, 234, 234);
@@ -177,58 +208,43 @@ header i:not(:first-child) {
     height: 100%;
 }
 .col-right header .resp-nav {
-    top: -5px;
-    right: 15px;
+    top: 3em;
+    right: 1em;
 }
 
     /* main chat */
 .main-right {
     flex-direction: column;
-    height: calc(100% - 110px);
+    height: calc(100% - 6.8em);
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
     background-size: contain;
-    padding: 20px 30px;
+    padding: 1.2em 2em;
     overflow: scroll;
 }
 .message {
     position: relative;
     min-width: 25%;
     max-width: 80%;
-    min-height: 42.5px;
+    min-height: 2.6rem;
     font-size: 0.8em;
-    margin-bottom: 10px;
-    padding: 10px 30px 10px 10px;
+    margin-bottom: 0.6em;
+    padding: 0.5em 2em 0.5em 0.7em;
     border-radius: 10px;
 }
 .message i {
     display: none;
     position: absolute;
     right: 0;
-    width: 30px;
-    line-height: 40px;
+    width: 2em;
+    line-height: 2.5em;
     text-align: center;
 }
-.resp-nav {
-    display: none;
-    position: absolute;
-    top: -20px;
+.message .resp-nav {
+    top: 2em;
     right: 5px;
-    width: 130px;
-    font-size: 13.5px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 50px;
-    border: 1px solid rgb(234, 234, 234);
-    z-index: 999;
-}
-.resp-nav li {
-    margin: 5px;
-    padding: 10px;
-}
-.resp-nav li:hover {
-    background-color: rgb(234, 234, 234);
-    cursor: pointer;
 }
 .message:hover i,
+i.fas.visible,
 .show {
     display: block;
 }
@@ -250,21 +266,18 @@ footer {
     bottom: 0;
     justify-content: space-between;
     width: 100%;
-    height: 50px;
+    height: 3em;
     background-color: rgb(243, 238, 234);
-    padding: 0 15px;
+    padding: 0 1em;
 }
 footer input {
     width: 90%;
     height: 70%;
-    margin: 0 10px;
+    margin: 0 0.8em;
 }
 footer i:not(:first-child) {
     display: none;
     width: 1em;
-    font-size: 18px;
+    font-size: 1.2em;
     color: rgb(110, 110, 110);
-}
-i.fas.visible {
-    display: block;
 }
