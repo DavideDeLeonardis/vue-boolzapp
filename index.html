@@ -17,109 +17,116 @@
 </head>
 
 <body>
-    <div class="body-container d-flex">
-        <main class="container d-flex" :class="{'font-120': varIncreaseFont, 'font-80': varDecreaseFont}" id="app">
-        <!-- <main class="container d-flex" :class="getFontIncrease() getFontDecrease()" id="app">  --> 
-        <!--                              con più di una funzione per :class => ERROR in console -->
-            <div class="col-left">
-                <header class="d-flex align-center">
-                    <div class="d-flex align-center">
-                        <img src="img/avatar_5.jpg" alt="img profilo personale">
-                        <span class="user-name">Davide</span>
-                    </div>
-                    <div class="d-flex">
-                        <i class="fas fa-circle-notch"></i>
-                        <i class="fas fa-comment-alt"></i>
-                        <i @click="varNavFont = !varNavFont"  class="fas fa-font"></i>
-                        <ul class="resp-nav" :class="{'show': varNavFont}">
-                            <li @click="varIncreaseFont = !varIncreaseFont">
-                                <i class="fas fa-plus"></i><br>
-                                Ingrandisci font</li>
-                            <li @click="varDecreaseFont = !varDecreaseFont">
-                                <i class="fas fa-minus"></i><br>
-                                Rimpicciolisci font</li> 
+    <div class="body-container d-flex" id="app">
+        <section class="splash-page" :class="{'d-none': varSplash}">
+            <h2>Vue Boolzapp si sta caricando...</h2>
+            <i class="fas fa-circle-notch"></i>
+        </section>
+
+        <main class="container" :class="{'show': varSplash, 'font-120': varIncreaseFont, 'font-80': varDecreaseFont}">
+            <!-- <main class="container main" :class="getFontIncrease() getFontDecrease()" id="app">  -->
+            <!--                              con più di una funzione per :class => ERROR in console -->
+            <div class="container-cols d-flex">
+                <div class="col-left">
+                    <header class="d-flex align-center">
+                        <div class="d-flex align-center">
+                            <img src="img/avatar_5.jpg" alt="img profilo personale">
+                            <span class="user-name">Davide</span>
+                        </div>
+                        <div class="d-flex">
+                            <i class="fas fa-circle-notch"></i>
+                            <i class="fas fa-comment-alt"></i>
+                            <i @click="varNavFont = !varNavFont" class="fas fa-font"></i>
+                            <ul class="resp-nav" :class="{'show': varNavFont}">
+                                <li @click="varIncreaseFont = !varIncreaseFont">
+                                    <i class="fas fa-plus"></i><br>
+                                    Ingrandisci font
+                                </li>
+                                <li @click="varDecreaseFont = !varDecreaseFont">
+                                    <i class="fas fa-minus"></i><br>
+                                    Rimpicciolisci font
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+
+                    <section class="notice d-flex align-center">
+                        <i class="fas fa-bell-slash"></i>
+                        <div class="text-notice">
+                            Ricevi notifiche di nuovi messaggi<br>
+                            <span>Attiva notifiche desktop</span>
+                        </div>
+                    </section>
+
+                    <div class="main-left">
+                        <div class="container-input d-flex align-center">
+                            <i @click="" class="fas fa-search"></i>
+                            <input type="text" placeholder="Cerca o inizia una nuova chat">
+                        </div>
+                        <ul class="container-chat">
+                            <li v-for="(contact, index) in contacts" @click="counter = index"
+                                class="chat d-flex align-center" :class="counter == index ? 'active' : ''">
+                                <img :src="`img/avatar${contact.avatar}.jpg`" alt="img profilo chat">
+                                <div class="chat-main d-flex">
+                                    <div class="user">{{ contact.name }}</div>
+                                    <span class="text">{{ getLastMessage(index) }}</span>
+                                    <span class="date">{{ getLastDate(index) }}</span>
+                                </div>
+                            </li>
                         </ul>
                     </div>
-                </header>
+                </div>
 
-                <section class="notice d-flex align-center">
-                    <i class="fas fa-bell-slash"></i>
-                    <div class="text-notice">
-                        Ricevi notifiche di nuovi messaggi<br>
-                        <span>Attiva notifiche desktop</span>
-                    </div>
-                </section>
-
-                <div class="main-left">
-                    <div class="container-input d-flex align-center">
-                        <i @click="" class="fas fa-search"></i>
-                        <input type="text" placeholder="Cerca o inizia una nuova chat">
-                    </div>
-                    <ul class="container-chat">
-                        <li v-for="(contact, index) in contacts" 
-                            @click="counter = index"
-                            class="chat d-flex align-center"
-                            :class="counter == index ? 'active' : ''">
-                            <img :src="`img/avatar${contact.avatar}.jpg`" alt="img profilo chat">
+                <div class="col-right">
+                    <header class="d-flex align-center">
+                        <div class="d-flex align-center">
+                            <img :src="`img/avatar${contacts[counter].avatar}.jpg`" alt="">
                             <div class="chat-main d-flex">
-                                <div class="user">{{ contact.name }}</div>
-                                <span class="text">{{ getLastMessage(index) }}</span>
-                                <span class="date">{{ getLastDate(index) }}</span>
+                                <div class="user">{{ contacts[counter].name }}</div>
+                                <span class="text">{{ contacts[counter].lastAccess }}</span>
                             </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-search"></i>
+                            <i class="fas fa-paperclip"></i>
+                            <i @click="varTrash = !varTrash" class="fas fa-trash"></i>
+                            <ul class="resp-nav" :class="{'show': varTrash}">
+                                <li @click="deleteAllMessages">Delete all messages</li> <!-- ERROR in console  -->
+                                <li @click="">Delete chat</li> <!-- missing function delete chat -->
+                            </ul>
+                        </div>
+                    </header>
+
+                    <ul class="main-right d-flex">
+                        <li v-for="(message, index) in contacts[counter].messages"
+                            class="message sent d-flex align-center"
+                            :class="message.status == 'sent' ? 'sent' : 'received'">
+                            {{ message.text }}
+                            <i @click="message.dropdown = !message.dropdown" class="fas fa-angle-down"></i>
+                            <ul class="resp-nav" :class="{'show': message.dropdown}">
+                                <li>Message info</li>
+                                <li @click="deleteMessage(index)">Delete message</li>
+                                <!-- se provo ad eliminare l'ultimo messaggio mandato ERROR in console -->
+                            </ul>
+                            <span class="date">{{ message.date }}</span>
                         </li>
                     </ul>
-                </div>
-            </div>
 
-            <div class="col-right">
-                <header class="d-flex align-center">
-                    <div class="d-flex align-center">
-                        <img :src="`img/avatar${contacts[counter].avatar}.jpg`" alt="">
-                        <div class="chat-main d-flex">
-                            <div class="user">{{ contacts[counter].name }}</div>
-                            <span class="text">{{ contacts[counter].lastAccess }}</span>
-                        </div>
-                    </div>
-                    <div>
-                        <i class="fas fa-search"></i>
-                        <i class="fas fa-paperclip"></i>
-                        <i @click="varTrash = !varTrash" class="fas fa-trash"></i>
-                        <ul class="resp-nav" :class="{'show': varTrash}">
-                            <li @click="deleteAllMessages">Delete all messages</li> <!-- ERROR in console  -->
-                            <li @click="">Delete chat</li> <!-- missing function delete chat -->
-                        </ul>
-                    </div>
-                </header>
-
-                <ul class="main-right d-flex">
-                    <li v-for="(message, index) in contacts[counter].messages" 
-                        class="message sent d-flex align-center" 
-                        :class="message.status == 'sent' ? 'sent' : 'received'">
-                        {{ message.text }}
-                        <i @click="message.dropdown = !message.dropdown" class="fas fa-angle-down"></i>
-                        <ul class="resp-nav" :class="{'show': message.dropdown}">
-                            <li>Message info</li>
-                            <li @click="deleteMessage(index)">Delete message</li> 
-                                <!-- se provo ad eliminare l'ultimo messaggio mandato ERROR in console -->
-                        </ul>
-                        <span class="date">{{ message.date }}</span>
-                    </li>
-                </ul>
-
-                <footer class="d-flex align-center">
-                    <i class="far fa-smile"></i>
-                    <input @keyup.enter="sendMessage()" 
-                        v-model="messageNew" 
-                        type="text" 
-                        placeholder="Scrivi un messaggio">
+                    <footer class="d-flex align-center">
+                        <i class="far fa-smile"></i>
+                        <input @keyup.enter="sendMessage()" 
+                            v-model="messageNew" 
+                            type="text"
+                            placeholder="Scrivi un messaggio">
                         <!-- con sendMessage(): se si cambia chat prima che si riceva la risposta, 
                                 quest'ultima verrà vista sulla chat attualmente visualizzata; 
                                 contacts[counter].lastAccess sbagliato -->
-                    <i class="fas fa-microphone" :class="messageNew.length != 0 ? '' : 'visible'"></i>
-                    <i @click="sendMessage()" 
-                        class="fas fa-plane-departure" 
-                        :class="messageNew.length != 0 ? 'visible' : ''"></i>
-                </footer>
+                        <i class="fas fa-microphone" :class="messageNew.length != 0 ? '' : 'visible'"></i>
+                        <i @click="sendMessage()" 
+                            class="fas fa-plane-departure"
+                            :class="messageNew.length != 0 ? 'visible' : ''"></i>
+                    </footer>
+                </div>
             </div>
         </main>
     </div>
