@@ -46,13 +46,21 @@
                             </div>
                             <i @click="varNavFont = !varNavFont" class="fas fa-font"></i>
                             <ul v-show="varNavFont" class="resp-nav">
-                                <li @click="varIncreaseFont = !varIncreaseFont">
-                                    <i class="fas fa-plus"></i><br>
-                                    Ingrandisci font
+                                <li @click="varIncreaseFont = !varIncreaseFont" v-show="!varDecreaseFont">
+                                    <span v-show="!varIncreaseFont">
+                                        <i class="fas fa-plus"></i><br></span>
+                                    <span v-show="!varIncreaseFont">Ingrandisci font</span>
+                                    <span v-show="varIncreaseFont">
+                                        <i class="fas fa-minus"></i><br></span>
+                                    <span v-show="varIncreaseFont">Rimpicciolisci font</span>
                                 </li>
-                                <li @click="varDecreaseFont = !varDecreaseFont">
-                                    <i class="fas fa-minus"></i><br>
-                                    Rimpicciolisci font
+                                <li @click="varDecreaseFont = !varDecreaseFont" v-show="!varIncreaseFont">
+                                    <span v-show="varDecreaseFont">
+                                        <i class="fas fa-plus"></i><br></span>
+                                    <span v-show="varDecreaseFont">Ingrandisci font</span>
+                                    <span v-show="!varDecreaseFont">
+                                        <i class="fas fa-minus"></i><br></span>
+                                    <span v-show="!varDecreaseFont">Rimpicciolisci font</span>
                                 </li>
                             </ul>
                         </div>
