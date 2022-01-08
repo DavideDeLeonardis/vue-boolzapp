@@ -17,18 +17,18 @@
 </head>
 
 <body>
-    <div class="body-container d-flex" id="app">
+    <div class="body-container d-flex" :class="{'bg-gray': varSwitch}" id="app">
         <section v-show="!varSplash" class="splash-page">
             <h2>Vue Boolzapp sta caricando...</h2>
             <i class="fas fa-circle-notch"></i>
         </section>
 
-        <main v-show="varSplash" class="container" :class="{'font-120': varIncreaseFont, 'font-80': varDecreaseFont}">
+        <main v-show="varSplash" class="container" :class="{'font-120': varIncreaseFont, 'font-80': varDecreaseFont, 'border-gray': varSwitch}">
             <!-- <main class="container main" :class="getFontIncrease() getFontDecrease()" id="app">  -->
             <!--                              con più di una funzione per :class => ERROR in console -->
             <div class="container-cols d-flex">
                 <div class="col-left">
-                    <header class="d-flex align-center">
+                    <header class="d-flex align-center" :class="{'bg-lightgray': varSwitch}">
                         <div class="d-flex align-center">
                             <img src="img/avatar_5.jpg" alt="img profilo personale">
                             <span class="user-name">Davide</span>
@@ -36,7 +36,7 @@
                         <div class="d-flex align-center">
                             <div @click="varSwitch =!varSwitch" 
                                 class="container-switch d-flex" 
-                                :class="{'bg-black': varSwitch, 'c-gray': varSwitch}">
+                                :class="{'bg-black': varSwitch}">
                                 <div class="switch" :class="{'translate': varSwitch}">
                                     <i v-show="!varSwitch" class="fas fa-sun"></i>
                                     <i v-show="varSwitch" class="fas fa-moon"></i>
@@ -66,21 +66,21 @@
                         </div>
                     </section>
 
-                    <div class="main-left">
+                    <div class="main-left" :class="{'bg-gray': varSwitch}">
                         <div class="container-input d-flex align-center">
                             <i @click="" class="fas fa-search"></i>
-                            <input type="text" placeholder="Cerca o inizia una nuova chat">
+                            <input @keyup.enter="" type="text" placeholder="Cerca o inizia una nuova chat">
                         </div>
                         <ul class="container-chat">
                             <li v-for="(contact, index) in contacts" 
                                 @click="counter = index"
                                 class="chat d-flex align-center" 
-                                :class="counter == index ? 'active' : ''">
+                                :class="{'active': counter == index, 'bg-lightgray': varSwitch}">
                                 <img :src="`img/avatar${contact.avatar}.jpg`" alt="img profilo chat">
                                 <div class="chat-main d-flex">
                                     <div class="user">{{ contact.name }}</div>
-                                    <span class="text">{{ getLastMessage(index) }}</span>
-                                    <span class="date">{{ getLastDate(index) }}</span>
+                                    <span class="text" :class="{'text-light-black': varSwitch}">{{ getLastMessage(index) }}</span>
+                                    <span class="date" :class="{'text-light-black': varSwitch}">{{ getLastDate(index) }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -88,12 +88,12 @@
                 </div>
 
                 <div class="col-right">
-                    <header class="d-flex align-center">
+                    <header class="d-flex align-center" :class="{'bg-lightgray': varSwitch}">
                         <div class="d-flex align-center">
                             <img :src="`img/avatar${contacts[counter].avatar}.jpg`" alt="">
                             <div class="chat-main d-flex">
                                 <div class="user">{{ contacts[counter].name }}</div>
-                                <span class="text">{{ contacts[counter].lastAccess }}</span>
+                                <span class="text" :class="{'text-light-black': varSwitch}">{{ contacts[counter].lastAccess }}</span>
                             </div>
                         </div>
                         <div>
@@ -107,7 +107,7 @@
                         </div>
                     </header>
 
-                    <ul class="main-right d-flex">
+                    <ul class="main-right d-flex" :class="{'bg-gray': varSwitch}">
                         <li v-for="(message, index) in contacts[counter].messages"
                             class="message sent d-flex align-center"
                             :class="message.status == 'sent' ? 'sent' : 'received'">
@@ -127,6 +127,7 @@
                         <input @keyup.enter="sendMessage()" 
                             v-model="messageNew" 
                             type="text"
+                            :class="{'bg-lightgray': varSwitch}"
                             placeholder="Scrivi un messaggio">
                         <!-- con sendMessage(): se si cambia chat prima che si riceva la risposta, 
                                 quest'ultima verrà vista sulla chat attualmente visualizzata; 

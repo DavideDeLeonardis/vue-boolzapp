@@ -73,12 +73,16 @@ ul {
     height: 90vh;
     background-color: rgb(255, 255, 255);
     margin: auto;
+    border: 1px solid transparent;
 }
 .font-120 {
     font-size: 120%;
 }
 .font-80 {
     font-size: 80%;
+}
+.border-gray {
+    border: 1px solid gray;
 }
 
 .container-cols {
@@ -107,7 +111,6 @@ header {
 
         /* switch theme button */
 .container-switch {
-    justify-content: space-between;
     height: 25px;
     width: 70px;
     padding: 1px;
@@ -130,9 +133,6 @@ header {
 .bg-black {
     background-color: black;
 }
-.c-gray {
-    color: rgb(201, 201, 201);
-}
 .switch i {
     position: absolute;
     top: 3px;
@@ -151,12 +151,11 @@ header {
     text-transform: uppercase;
 }
 .light-text-button {
-    width: 55%;
-    align-self: flex-end;
     color: rgb(128, 128, 128);
+    transform: translateX(10px);
 }
 .dark-text-button {
-    width: 70%;
+    color: rgb(201, 201, 201);
     transform: translateX(-10px);
 }
 
@@ -357,4 +356,15 @@ footer i:not(:first-child) {
     width: 1em;
     font-size: 1.2em;
     color: rgb(110, 110, 110);
+}
+
+/* switch theme classes */
+.text-light-black {
+    color: #5e5e5e;
+}
+.bg-gray {
+    background: linear-gradient(rgb(49, 49, 49) 52%, rgba(139,139,139,1) 100%);
+}
+.bg-lightgray {
+    background-color: rgb(212, 212, 212);
 }
