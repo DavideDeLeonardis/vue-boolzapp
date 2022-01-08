@@ -104,7 +104,65 @@ header {
     font-size: 1em;
     margin-left: 10px;
 }
+
+        /* switch theme button */
+.container-switch {
+    justify-content: space-between;
+    height: 25px;
+    width: 70px;
+    padding: 1px;
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 20px;
+    cursor: pointer;
+}
+.switch {
+    position: relative;
+    width: 21px;
+    height: 21px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+.translate {
+    transform: translateX(45px);
+}
+.bg-black {
+    background-color: black;
+}
+.c-gray {
+    color: rgb(201, 201, 201);
+}
+.switch i {
+    position: absolute;
+    top: 3px;
+    left: -6.5px;
+    font-size: 14px;
+}
+.switch i:last-child {
+    color: rgb(0, 0, 0);
+}
+.switch i:hover {
+    transform: scale(1);
+}
+.container-switch span {
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.light-text-button {
+    width: 55%;
+    align-self: flex-end;
+    color: rgb(128, 128, 128);
+}
+.dark-text-button {
+    width: 70%;
+    transform: translateX(-10px);
+}
+
+        /* font icon */
 header i {
+    position: relative;
     font-size: 1em;
     color: rgb(177, 177, 177);
     margin-left: 0.6em;
@@ -117,6 +175,11 @@ header i {
     border: 1px solid rgb(234, 234, 234);
     z-index: 999;
 }
+.col-left .resp-nav {
+    width: 11em;
+    text-align: center;
+    transform: translate(-35%, 60%);
+}
 .resp-nav li {
     margin: 5px;
     padding: 0.8em;
@@ -124,11 +187,6 @@ header i {
 .resp-nav li:hover {
     background-color: rgb(234, 234, 234);
     cursor: pointer;
-}
-.col-left .resp-nav {
-    width: 11em;
-    text-align: center;
-    transform: translate(-50%, 15%);
 }
 
     /* notice */

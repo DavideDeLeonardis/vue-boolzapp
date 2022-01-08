@@ -157,7 +157,8 @@ const app = new Vue(
             varNavFont: false,
             varIncreaseFont: false,
             varDecreaseFont: false,
-            varSplash: false
+            varSplash: false,
+            varSwitch: false
         },
         methods: {
             // PROBLEMA: se l'array messaggi è vuoto => ERROR text and date in console
