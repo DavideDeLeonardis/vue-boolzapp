@@ -73,7 +73,6 @@ ul {
     height: 90vh;
     background-color: rgb(255, 255, 255);
     margin: auto;
-    display: none;
 }
 .font-120 {
     font-size: 120%;
@@ -110,11 +109,7 @@ header i {
     color: rgb(177, 177, 177);
     margin-left: 0.6em;
 }
-.col-left header i.fa-ellipsis-v {
-    position: relative;
-}
 .resp-nav {
-    display: none;
     position: absolute;
     width: 8rem;
     font-size: 0.85rem;
@@ -266,14 +261,12 @@ header i {
     line-height: 2.5em;
     text-align: center;
 }
+.message:hover i {
+    display: block;
+}
 .message .resp-nav {
     top: 2em;
     right: 5px;
-}
-.message:hover i,
-i.fas.visible,
-.show {
-    display: block;
 }
 .message .date {
     bottom: 2px;
@@ -303,7 +296,6 @@ footer input {
     margin: 0 0.8em;
 }
 footer i:not(:first-child) {
-    display: none;
     width: 1em;
     font-size: 1.2em;
     color: rgb(110, 110, 110);

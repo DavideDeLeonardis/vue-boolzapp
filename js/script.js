@@ -139,7 +139,7 @@ const app = new Vue(
                     // lastAccess: null,
                     // messages: [],
                 // },
-                    // se aggiungo contatti senza messages ERROR in console
+                    // se aggiungo contatti senza messages => ERROR in console
             ],
             answers: [
                 'Va bene.',
@@ -157,10 +157,10 @@ const app = new Vue(
             varNavFont: false,
             varIncreaseFont: false,
             varDecreaseFont: false,
-            varSplash: false,
+            varSplash: false
         },
         methods: {
-            // PROBLEMA: se l'array messaggi è vuoto ERROR text and date in console
+            // PROBLEMA: se l'array messaggi è vuoto => ERROR text and date in console
                 // se .text and .date sono decommentati no error
             lastMessage(index) {
                 return lastMessage = this.contacts[index].messages.length - 1;
@@ -191,7 +191,7 @@ const app = new Vue(
             // FUNCTIONS INPUT FOOTER
             sendMessage() {
                 if (this.messageNew.trim().length != 0) {
-                    // const varDayJs = dayjs(); 
+                    // const varDayJs = dayjs(); (decommentare CDN)
                     let message = {
                         // date: `${varDayJs.format('HH')}:${varDayJs.format('mm')}`,
                         date: this.getDate(),
@@ -260,7 +260,7 @@ const app = new Vue(
         },
         created() {
             setTimeout(() => {
-                this.varSplash = !this.varSplash;
+                this.varSplash = true;
             }, 1500);
             this.contacts[this.counter].lastAccess = this.getLastAccess();
                 // lastAccess si vede all'apertura solo in contacts[0]
