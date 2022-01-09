@@ -14,7 +14,7 @@
             // lettere inserite (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
 
 // Milestone 5
-    // Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
+    // PARZIALMENTE FATTO: Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
     // Visualizzazione ora e ultimo messaggio inviato/ricevuto nella lista dei contatti 
 
 // Bonus
@@ -155,16 +155,18 @@ const app = new Vue(
             messageNew: '',
             // contactSearch: '', for filter: search in chats
             varMessageSent: false,
-            varTrash: false,
+            varSplashPage: false,
+            varSwitch: false,
             varNavFont: false,
             varIncreaseFont: false,
             varDecreaseFont: false,
-            varSplash: false,
-            varSwitch: false
+            varTrash: false
+
+            // var visible non usata
         },
         methods: {
-            // PROBLEMA: se l'array messaggi è vuoto => ERROR text and date in console
-                // se .text and .date sono decommentati no error
+            // PROBLEMA: se l'array messagges di anche un solo contatto è vuoto, alcune funzioni non possono essere eseguite => ERROR text and date in console
+
             lastMessage(index) {
                 return lastMessage = this.contacts[index].messages.length - 1;
             },
@@ -188,7 +190,7 @@ const app = new Vue(
                 return dateLast;
             },
             search() {
-                
+                // ?????
             },
 
             // FUNCTIONS INPUT FOOTER
@@ -218,7 +220,8 @@ const app = new Vue(
                         this.varMessageSent = true;
                     }
                 }
-                // se si cambia chat prima che si riceva la risposta: - quest'ultima verrà vista sulla chat attualmente visualizzata; - contacts[counter].lastAccess sballato
+                // se si cambia chat prima che si riceva la risposta: - quest'ultima verrà vista sulla chat visualizzata per ultima; 
+                //                                                    - contacts[counter].lastAccess sballato fra le varie chat visualizzate
             },
             receiveMessage() {
                 let message = {
@@ -263,8 +266,8 @@ const app = new Vue(
         },
         created() {
             setTimeout(() => {
-                this.varSplash = true;
-            }, 0);
+                this.varSplashPage = true;
+            }, 1000);
             this.contacts[this.counter].lastAccess = this.getLastAccess();
                 // lastAccess si vede all'apertura solo in contacts[0]
         }

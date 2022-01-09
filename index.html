@@ -18,12 +18,14 @@
 
 <body>
     <div class="body-container d-flex" :class="{'bg-gray': varSwitch}" id="app">
-        <section v-show="!varSplash" class="splash-page">
+        <section v-show="!varSplashPage" class="splash-page">
             <h2>Vue Boolzapp sta caricando...</h2>
             <i class="fas fa-circle-notch"></i>
         </section>
 
-        <main v-show="varSplash" class="container" :class="{'font-120': varIncreaseFont, 'font-80': varDecreaseFont, 'border-gray': varSwitch}">
+        <main v-show="varSplashPage" 
+            class="container" 
+            :class="{'font-120': varIncreaseFont, 'font-80': varDecreaseFont, 'border-gray': varSwitch}">
             <!-- <main class="container main" :class="getFontIncrease() getFontDecrease()" id="app">  -->
             <!--                              con più di una funzione per :class => ERROR in console -->
             <div class="container-cols d-flex">
@@ -44,7 +46,9 @@
                                 <span v-show="!varSwitch" class="light-text-button">Light Mode</span>
                                 <span v-show="varSwitch" class="dark-text-button">Dark mode</span>
                             </div>
-                            <i @click="varNavFont = !varNavFont" class="fas fa-font"></i>
+                            <i @click="varNavFont = !varNavFont" 
+                                class="fas fa-font" 
+                                :class="{'icon-color': varSwitch}"></i>
                             <ul v-show="varNavFont" class="resp-nav">
                                 <li @click="varIncreaseFont = !varIncreaseFont" v-show="!varDecreaseFont">
                                     <span v-show="!varIncreaseFont">
@@ -105,9 +109,11 @@
                             </div>
                         </div>
                         <div>
-                            <i class="fas fa-search"></i>
-                            <i class="fas fa-paperclip"></i>
-                            <i @click="varTrash = !varTrash" class="fas fa-trash"></i>
+                            <i class="fas fa-search" :class="{'icon-color': varSwitch}"></i>
+                            <i class="fas fa-paperclip" :class="{'icon-color': varSwitch}"></i>
+                            <i @click="varTrash = !varTrash" 
+                                class="fas fa-trash" 
+                                :class="{'icon-color': varSwitch}"></i>
                             <ul v-show="varTrash" class="resp-nav">
                                 <li @click="deleteAllMessages">Delete all messages</li> <!-- ERROR in console  -->
                                 <li @click="">Delete chat</li> <!-- missing function delete chat -->
@@ -134,8 +140,8 @@
                         <i class="far fa-smile"></i>
                         <input @keyup.enter="sendMessage()" 
                             v-model="messageNew" 
-                            type="text"
                             :class="{'bg-lightgray': varSwitch}"
+                            type="text"
                             placeholder="Scrivi un messaggio">
                         <!-- con sendMessage(): se si cambia chat prima che si riceva la risposta, 
                                 quest'ultima verrà vista sulla chat attualmente visualizzata; 

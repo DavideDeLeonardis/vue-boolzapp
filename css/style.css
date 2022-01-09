@@ -13,9 +13,6 @@ html {
 .d-flex {
     display: flex;
 }
-.d-none {
-    display: none;
-}
 .align-center {
     align-items: center;
 }
@@ -129,7 +126,7 @@ header {
     z-index: 999;
 }
 .translate {
-    transform: translateX(45px);
+    transform: translateX(45px) rotate(360deg);
 }
 .bg-black {
     background-color: black;
@@ -217,7 +214,7 @@ header i {
     /* main left */
 .main-left {
     width: 100%;
-    height: calc(100% - 7.5em - 5px);
+    height: calc(100% - 7.5em - 7px);
     background-color: rgb(248, 248, 248);
 }
 
@@ -363,9 +360,14 @@ footer i:not(:first-child) {
 .text-light-black {
     color: #5e5e5e;
 }
+.icon-color {
+    color: rgb(70, 70, 70);
+    transition: 0.3s;
+}
 .bg-gray {
     background: linear-gradient(rgb(49, 49, 49) 52%, rgba(139,139,139,1) 100%);
 }
 .bg-lightgray {
     background-color: rgb(212, 212, 212);
+    transition: 0.3s;
 }
