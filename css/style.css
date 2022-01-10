@@ -34,6 +34,7 @@ input {
     outline: none;
 }
 ul {
+    flex-direction: column;
     list-style-type: none;
 }
 /* /commons */
@@ -291,7 +292,6 @@ header i {
 
     /* main chat */
 .main-right {
-    flex-direction: column;
     height: calc(100% - 6.8em);
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
     background-size: contain;

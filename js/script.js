@@ -1,34 +1,3 @@
-// Milestone 1
-    // Replica della grafica con la possibilità di avere messaggi scritti dall’utente (verdi) e dall’interlocutore (bianco) assegnando due classi CSS diverse
-    // Visualizzazione dinamica della lista contatti: tramite la direttiva v-for, visualizzare nome e immagine di ogni contatto
-// Milestone 2
-    // Visualizzazione dinamica dei messaggi: tramite la direttiva v-for, visualizzare tutti i messaggi relativi al 
-        // contatto attivo all’interno del pannello della conversazione
-    // Click sul contatto mostra la conversazione del contatto cliccato
-// Milestone 3
-    // Aggiunta di un messaggio: l’utente scrive un testo nella parte bassa e digitando “enter” il testo viene aggiunto al thread sopra, come messaggio verde
-    // Risposta dall’interlocutore: ad ogni inserimento di un messaggio, l’utente riceverà un “ok” come risposta, che apparirà dopo 1 secondo.
-// Milestone 4
-    // Ricerca utenti: scrivendo qualcosa nell’input a sinistra, vengono visualizzati solo i contatti il cui nome contiene le 
-        // lettere inserite (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
-// Milestone 5
-    // PARZIALMENTE FATTO: Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
-    // Visualizzazione ora e ultimo messaggio inviato/ricevuto nella lista dei contatti 
-
-// Bonus
-    // Evitare che l'utente possa inviare un messaggio vuoto o composto solamente da spazi
-    // A) Cambiare icona in basso a destra (a fianco all'input per scrivere un nuovo messaggio) finché l'utente sta scrivendo: di default si visualizza l'icona del microfono, quando l'input non è vuoto si visualizza l'icona dell'aeroplano. Quando il messaggio è stato inviato e l'input si svuota, si torna a visualizzare il microfono. B) inviare quindi il messaggio anche cliccando sull'icona dell'aeroplano
-    // Visualizzare nella lista dei contatti l'ultimo messaggio inviato/ricevuto da ciascun contatto
-    // Inserire l'orario corretto nei messaggi 
-    // Predisporre una lista di frasi e/o citazioni da utilizzare al posto della risposta "ok:" quando il pc risponde, anziché scrivere "ok", scegliere una frase random dalla lista e utilizzarla come testo del messaggio di risposta del pc
-    // Sotto al nome del contatto nella parte in alto a destra, cambiare l'indicazione dello stato: visualizzare il testo "sta scrivendo..." nel timeout in cui il pc risponde, poi mantenere la scritta "online" per un paio di secondi e infine visualizzare "ultimo accesso alle xx:yy" con l'orario corretto
-    // Aggiungere una splash page visibile per 1s all'apertura dell'app
-    // Aggiungere un'icona per cambiare la modalità light/dark
-    // Aggiungere un'icona per ingrandire o rimpicciolire il font
-
-        // Dare la possibilità all'utente di cancellare tutti i messaggi di un contatto o di cancellare l'intera chat con tutti i suoi dati: cliccando sull'icona con i tre pallini in alto a destra, si apre un dropdown menu in cui sono presenti le voci "Elimina messaggi" ed "Elimina chat"; cliccando su di essi si cancellano rispettivamente tutti i messaggi di quel contatto (quindi rimane la conversazione vuota) oppure l'intera chat comprensiva di tutti i dati del contatto oltre che tutti i suoi messaggi (quindi sparisce il contatto anche dalla lista di sinistra)
-        // Visualizzare un messaggio di benvenuto che invita l'utente a selezionare un contatto dalla lista per visualizzare i suoi messaggi, anziché attivare di default la prima conversazione
-        
 const app = new Vue(
     {
         el: '#app',
@@ -172,13 +141,13 @@ const app = new Vue(
                         },
                     ],
                 },
-                // {
-                //     name: "Davide",
-                //     avatar: "_7",
-                //     visible: true,
-                //     lastAccess: 'Ultimo accesso: ',
-                //     messages: [],
-                // }
+                {
+                    name: "Davide",
+                    avatar: "_7",
+                    visible: true,
+                    lastAccess: null,
+                    messages: [],
+                }
             ],
             answers: [
                 'Va bene.',
@@ -200,26 +169,29 @@ const app = new Vue(
             varTrash: false
         },
         methods: {
-            // PROBLEMA: se l'array messagges di anche un solo contatto è vuoto, alcune funzioni non possono essere eseguite => ERROR text and date in console
-            // PROBLEMA: se aggiungo contatti con array messages vuoto => ERROR in console
-
             lastMessage(index) {
                 return lastMessage = this.contacts[index].messages.length - 1;
             },
             getLastMessage(index) {
-                this.lastMessage(index);
-                let lastText = this.contacts[index].messages[lastMessage].text;
-                let muchText = lastText.split(' ');
-                if (muchText.length > 10) {
-                    muchText.splice(10);
-                    return `${muchText.join(' ')}...`;
+                if (this.contacts[index].messages.length > 0) {
+                    this.lastMessage(index);
+                    let lastText = this.contacts[index].messages[lastMessage].text;
+                    let muchText = lastText.split(' ');
+                    if (muchText.length > 10) {
+                        muchText.splice(10);
+                        return `${muchText.join(' ')}...`;
+                    }
+                    return lastText;
                 }
-                return lastText;
+                return '';
             },
             getLastDate(index) {
-                this.lastMessage(index);
-                let dateLast = this.contacts[index].messages[lastMessage].date;
-                return dateLast;
+                if (this.contacts[index].messages.length > 0) {
+                    this.lastMessage(index);
+                    let dateLast = this.contacts[index].messages[lastMessage].date;
+                    return dateLast;
+                }
+                return '';
             },
             search() {
                 let text = this.textSearch.toLowerCase();
@@ -286,15 +258,15 @@ const app = new Vue(
             // FUNCTIONS DROPDOWN MENUS
             deleteMessage(index) {
                 this.contacts[this.counter].messages.splice(index, 1);
-                // se provo ad eliminare l'ultimo messaggio => ERROR in console
             },
             deleteAllMessages() {
                 this.contacts[this.counter].messages = [];
-                // ERROR in console
+                this.varTrash = false;
             },
             deleteChat() {
-                // ?????
-            },
+                this.contacts[this.counter].visible = false;
+                this.deleteAllMessages();
+            }
         },
         created() {
             setTimeout(() => {

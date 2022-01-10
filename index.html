@@ -117,26 +117,28 @@
                                 class="fas fa-trash" 
                                 :class="{'icon-color': varSwitch}"></i>
                             <ul v-show="varTrash" class="resp-nav">
-                                <li @click="deleteAllMessages">Delete all messages</li> <!-- ERROR in console  -->
-                                <li @click="">Delete chat</li> <!-- missing function delete chat -->
+                                <li @click="deleteAllMessages">Delete all messages</li>
+                                <li @click="deleteChat">Delete chat</li>
                             </ul>
                         </div>
                     </header>
 
-                    <ul class="main-right d-flex" :class="{'bg-gray': varSwitch}">
-                        <li v-for="(message, index) in contacts[counter].messages"
-                            class="message sent d-flex align-center"
-                            :class="message.status == 'sent' ? 'sent' : 'received'">
-                            {{ message.text }}
-                            <i @click="message.dropdown = !message.dropdown" class="fas fa-angle-down"></i>
-                            <ul v-show="message.dropdown" class="resp-nav">
-                                <li>Message info</li>
-                                <li @click="deleteMessage(index)">Delete message</li>
-                                <!-- se provo ad eliminare l'ultimo messaggio visualizzato => ERROR in console -->
-                            </ul>
-                            <span class="date">{{ message.date }}</span>
-                        </li>
-                    </ul>
+                    <div class="main-right" :class="{'bg-gray': varSwitch}">
+                        <ul v-show="contacts[counter].messages.length > 0" class="d-flex">
+                            <li v-for="(message, index) in contacts[counter].messages"
+                                class="message sent d-flex align-center"
+                                :class="message.status == 'sent' ? 'sent' : 'received'">
+                                {{ message.text }}
+                                <i @click="message.dropdown = !message.dropdown" class="fas fa-angle-down"></i>
+                                <ul v-show="message.dropdown" class="resp-nav">
+                                    <li>Message info</li>
+                                    <li @click="deleteMessage(index)">Delete message</li>
+                                </ul>
+                                <span class="date">{{ message.date }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
 
                     <footer class="d-flex align-center">
                         <i class="far fa-smile"></i>
