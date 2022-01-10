@@ -301,7 +301,7 @@ const app = new Vue(
         created() {
             setTimeout(() => {
                 this.varSplashPage = true;
-            }, 1);
+            }, 1000);
             this.contacts[this.counter].lastAccess = this.getLastAccess();    
         }
     }
