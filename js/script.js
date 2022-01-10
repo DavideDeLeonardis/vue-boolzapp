@@ -38,7 +38,7 @@ const app = new Vue(
                     name: "Michele",
                     avatar: "_1",
                     visible: true,
-                    lastAccess: null,
+                    lastAccess: 'Ultimo accesso: 10/01/2020 16:15:22',
                     messages: [
                         {
                             date: "10/01/2020 15:30:55",
@@ -64,7 +64,7 @@ const app = new Vue(
                     name: "Fabio",
                     avatar: "_2",
                     visible: true,
-                    lastAccess: null,
+                    lastAccess: "Ultimo accesso: 20/03/2020 16:30:55",
                     messages: [
                         {
                             date: "20/03/2020 16:30:00",
@@ -90,7 +90,7 @@ const app = new Vue(
                     name: "Samuele",
                     avatar: "_3",
                     visible: true,
-                    lastAccess: null,
+                    lastAccess: 'Ultimo accesso: 28/03/2020 16:15:22',
                     messages: [
                         {
                             date: "28/03/2020 10:10:40",
@@ -116,7 +116,7 @@ const app = new Vue(
                     name: "Giovanni",
                     avatar: "_4",
                     visible: true,
-                    lastAccess: null,
+                    lastAccess: 'Ultimo accesso: 10/01/2020 15:50:00',
                     messages: [
                         {
                             date: "10/01/2020 15:30:55",
@@ -136,7 +136,7 @@ const app = new Vue(
                     name: "Marco",
                     avatar: "_5",
                     visible: true,
-                    lastAccess: null,
+                    lastAccess: 'Ultimo accesso: 10/01/2020 15:50:00',
                     messages: [
                         {
                             date: "10/01/2020 15:50:00",
@@ -156,7 +156,7 @@ const app = new Vue(
                     name: "Luisa",
                     avatar: "_6",
                     visible: true,
-                    lastAccess: null,
+                    lastAccess: 'Ultimo accesso: 10/01/2020 15:50:00',
                     messages: [
                         {
                             date: "10/01/2020 15:30:55",
@@ -176,7 +176,7 @@ const app = new Vue(
                 //     name: "Davide",
                 //     avatar: "_7",
                 //     visible: true,
-                //     lastAccess: null,
+                //     lastAccess: 'Ultimo accesso: ',
                 //     messages: [],
                 // }
             ],
@@ -202,8 +202,6 @@ const app = new Vue(
         methods: {
             // PROBLEMA: se l'array messagges di anche un solo contatto è vuoto, alcune funzioni non possono essere eseguite => ERROR text and date in console
             // PROBLEMA: se aggiungo contatti con array messages vuoto => ERROR in console
-            // PROBLEMA: lastAccess si vede all'apertura solo in contacts[0] (created())
-                // se si commenta in js e si mette  --- contacts[counter].lastAccess = getLastAccess() --- in html, lastAccess visualizzerà solo gli orari, ignorando 'Online', 'Sta scrivendo...'
 
             lastMessage(index) {
                 return lastMessage = this.contacts[index].messages.length - 1;
@@ -302,7 +300,6 @@ const app = new Vue(
             setTimeout(() => {
                 this.varSplashPage = true;
             }, 1000);
-            this.contacts[this.counter].lastAccess = this.getLastAccess();    
         }
     }
 );
