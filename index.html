@@ -12,7 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <!-- <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script> -->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <title>Vue Boolzapp</title>
 </head>
 
@@ -80,11 +80,15 @@
 
                     <div class="main-left" :class="{'bg-gray': varSwitch}">
                         <div class="container-input d-flex align-center">
-                            <i @click="" class="fas fa-search"></i>
-                            <input @keyup.enter="" type="text" placeholder="Cerca o inizia una nuova chat">
+                            <i class="fas fa-search"></i>
+                            <input @keyup="search()" 
+                                v-model="textSearch"
+                                type="text" 
+                                placeholder="Cerca o inizia una nuova chat">
                         </div>
                         <ul class="container-chat">
                             <li v-for="(contact, index) in contacts" 
+                                v-show="contact.visible"
                                 @click="counter = index"
                                 class="chat d-flex align-center" 
                                 :class="{'active': counter == index, 'bg-lightgray': varSwitch}">
