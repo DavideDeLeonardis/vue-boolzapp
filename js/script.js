@@ -225,8 +225,6 @@ const app = new Vue(
                         this.varMessageSent = true;
                     }
                 }
-                // se si cambia chat prima che si riceva la risposta: - quest'ultima verrà vista sulla chat visualizzata per ultima; 
-                //                                                    - contacts[counter].lastAccess sballato fra le varie chat visualizzate
             },
             receiveMessage() {
                 let message = {
